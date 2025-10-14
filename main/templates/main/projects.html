@@ -1,0 +1,37 @@
+{% extends 'main/base.html' %}
+{% block title %} Projects Page {% endblock %}
+{% block content %}
+
+<h2 class="fw-bold mb-4 text-center"> My Projects</h2>
+<div class="row">
+
+  <div class="col-md-4 mb-4">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">My EPortfolio</h5>
+        <p class="card-text">
+          A personal portfolio website built with <strong>Django</strong>.
+          Showcases academic projects, professional experience, and technical skills — fully deployed on <strong>GitHub Pages</strong>.
+        </p>
+        <a href="https://github.com/jossseluuu/eportfolio" class="btn btn-outline-primary" target="_blank"> See in GitHub </a>
+        <a href="https://" class="btn btn-outline-primary" target="_blank"> See the Page</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4 mb-4">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">My Airline Database</h5>
+        <p class="card-text">
+          A <strong>Database & SQL</strong> project focused on modeling an airline system, 
+          including data for <strong>flights</strong>, <strong>crew members</strong>, and <strong>airports</strong>. 
+          Designed and implemented relational tables, queries, and relationships to manage operations efficiently.
+        </p>
+        <a href="https://github.com/jossseluuu/airline-database-project" class="btn btn-outline-primary" target="_blank"> See in GitHub </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
