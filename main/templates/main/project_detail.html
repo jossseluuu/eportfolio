@@ -1,0 +1,77 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %}{{ project.name }} · {{ profile.name }}{% endblock %}
+{% block og_title %}{{ project.name }} · {{ project.subtitle }}{% endblock %}
+{% block description %}{{ project.summary }}{% endblock %}
+
+{% block content %}
+<article class="section project-page">
+  <div class="container">
+    <p><a class="back-link" href="{{ home_url }}#projects">← {{ ui.back }}</a></p>
+
+    <header class="project-header">
+      <p class="section-kicker"><span aria-hidden="true">{{ project.icon }}</span> {{ ui.featured }}</p>
+      <h1 class="section-title">{{ project.name }}</h1>
+      <p class="project-subtitle-lg">{{ project.subtitle }}</p>
+      <p><span class="badge">{{ project.status }}</span></p>
+      <ul class="tags">{% for t in project.stack %}<li>{{ t }}</li>{% endfor %}</ul>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="{{ project.repo }}">{{ ui.repo }} ↗</a>
+        {% if project.site %}<a class="btn btn-ghost" href="{{ project.site }}">{{ ui.visit_site }} ↗</a>{% endif %}
+      </div>
+    </header>
+
+    <div class="prose">
+      {% for p in project.description %}<p>{{ p }}</p>{% endfor %}
+    </div>
+
+    {% if project.metrics %}
+    <h2 class="subhead">{{ ui.results }}</h2>
+    <ul class="stats">
+      {% for m in project.metrics %}
+      <li class="stat"><span class="stat-value">{{ m.value }}</span><span class="stat-label">{{ m.label }}</span></li>
+      {% endfor %}
+    </ul>
+    {% if project.metrics_note %}<p class="note">{{ project.metrics_note }}</p>{% endif %}
+    {% endif %}
+
+    {% if project.cards %}
+    <ul class="grid grid-3 project-cards">
+      {% for c in project.cards %}
+      <li class="card"><h2 class="card-title">{{ c.title }}</h2><p>{{ c.text }}</p></li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if project.images %}
+    <h2 class="subhead">{{ ui.screenshots }}</h2>
+    <div class="gallery">
+      {% for img in project.images %}
+      <figure>
+        <a href="{% static img.src %}"><img src="{% static img.src %}" width="{{ img.w }}" height="{{ img.h }}" alt="{{ img.caption }}" loading="lazy"></a>
+        <figcaption>{{ img.caption }}</figcaption>
+      </figure>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="grid grid-2 project-sections">
+      {% for s in project.sections %}
+      <section class="card">
+        <h2 class="card-title">{{ s.title }}</h2>
+        <ul class="bullets">{% for i in s.items %}<li>{{ i }}</li>{% endfor %}</ul>
+      </section>
+      {% endfor %}
+    </div>
+
+    <nav class="next-project" aria-label="{{ ui.nav_projects }}">
+      <a href="{% if lang == 'es' %}{% url 'project_es' next_project.slug %}{% else %}{% url 'project_en' next_project.slug %}{% endif %}">
+        <span class="muted">{{ ui.nav_projects }} →</span>
+        <strong>{{ next_project.icon }} {{ next_project.name }}</strong>
+        <span class="muted">{{ next_project.subtitle }}</span>
+      </a>
+    </nav>
+  </div>
+</article>
+{% endblock %}

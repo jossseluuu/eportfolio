@@ -1,0 +1,18 @@
+{% extends "main/base.html" %}
+
+{% block title %}404 · {{ profile.name }}{% endblock %}
+
+{% block content %}
+<section class="section not-found">
+  <div class="container">
+    <p class="stat-value">404</p>
+    <h1 class="section-title">{{ ui.not_found_title }}</h1>
+    <p class="lead">{{ ui.not_found_text }}</p>
+    <p lang="es" class="muted">{{ es_ui.not_found_title }} · {{ es_ui.not_found_text }}</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="{{ home_url }}">{{ ui.go_home }}</a>
+      <a class="btn btn-ghost" href="{{ es_home_url }}" lang="es">{{ es_ui.go_home }}</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

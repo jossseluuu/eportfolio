@@ -1,11 +1,208 @@
-{% extends 'main/base.html' %}
-{% block title %} Home Page {% endblock %}
+{% extends "main/base.html" %}
+{% load static %}
+
 {% block content %}
 
-<div class="text-center">
-  <h1 class="display-4 fw-bold">¡Hello! My name is Jose Luis.</h1>
-  <p class="lead mt-3"> I'm learning Web Programming to create new and atractive webb apps.</p>
-  <a href="/projects/" class="btn btn-primary mt-4 px-4">Look my projects</a>
-</div>
+{# ------------------------------------------------------------ HERO #}
+<section class="hero" aria-labelledby="hero-title">
+  <div class="container hero-grid">
+    <div class="hero-text">
+      <p class="eyebrow">{{ profile.role }} · {{ profile.location }}</p>
+      <h1 id="hero-title">{{ profile.name }}</h1>
+      <p class="hero-tagline">{{ profile.tagline }}</p>
+      <p class="hero-intro">{{ profile.intro }}</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#projects">{{ ui.cta_projects }}</a>
+        <a class="btn btn-ghost" href="{% if lang == 'es' %}{% static 'docs/JoseLuisLopez_CV_ES.pdf' %}{% else %}{% static 'docs/JoseLuisLopez_CV_EN.pdf' %}{% endif %}" download>{{ ui.cta_cv }} ↓</a>
+      </div>
+      <ul class="hero-links" aria-label="{{ ui.nav_contact }}">
+        <li><a href="{{ profile.github }}">GitHub</a></li>
+        <li><a href="{{ profile.linkedin }}">LinkedIn</a></li>
+        <li><a href="mailto:{{ profile.email }}">{{ profile.email }}</a></li>
+      </ul>
+    </div>
+    <div class="hero-photo">
+      <img src="{% static 'img/profile.webp' %}" width="480" height="480" alt="{{ profile.name }}" fetchpriority="high">
+    </div>
+  </div>
+  <div class="container">
+    <ul class="stats stats-hero">
+      {% for h in highlights %}
+      <li class="stat"><span class="stat-value">{{ h.value }}</span><span class="stat-label">{{ h.label }}</span></li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+{# ------------------------------------------------------------ ABOUT #}
+<section id="about" class="section" aria-labelledby="about-title">
+  <div class="container">
+    <p class="section-kicker">01 · {{ ui.nav_about }}</p>
+    <h2 id="about-title" class="section-title">{{ about.title }}</h2>
+    <div class="about-text">
+      {% for p in about.paragraphs %}<p>{{ p }}</p>{% endfor %}
+    </div>
+    <h3 class="subhead">{{ ui.how_i_work }}</h3>
+    <ul class="grid grid-4">
+      {% for item in about.principles %}
+      <li class="card">
+        <span class="card-icon" aria-hidden="true">{{ item.icon }}</span>
+        <h4 class="card-title">{{ item.title }}</h4>
+        <p>{{ item.text }}</p>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+{# ------------------------------------------------------------ PROJECTS #}
+<section id="projects" class="section section-alt" aria-labelledby="projects-title">
+  <div class="container">
+    <p class="section-kicker">02 · {{ ui.featured }}</p>
+    <h2 id="projects-title" class="section-title">{{ ui.featured_title }}</h2>
+    <ul class="project-list">
+      {% for p in featured_projects %}
+      <li class="project-card">
+        <a class="project-card-link" href="{% if lang == 'es' %}{% url 'project_es' p.slug %}{% else %}{% url 'project_en' p.slug %}{% endif %}">
+          <div class="project-card-head">
+            <span class="project-icon" aria-hidden="true">{{ p.icon }}</span>
+            <span class="badge">{{ p.status }}</span>
+          </div>
+          <h3 class="project-name">{{ p.name }}</h3>
+          <p class="project-subtitle">{{ p.subtitle }}</p>
+          <p class="project-summary">{{ p.summary }}</p>
+          <ul class="tags">{% for t in p.stack|slice:":5" %}<li>{{ t }}</li>{% endfor %}</ul>
+          <span class="more">{{ ui.details }} →</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+
+    <h3 class="subhead">{{ ui.other_projects }}</h3>
+    <ul class="grid grid-2">
+      {% for p in other_projects %}
+      <li class="card">
+        <h4 class="card-title"><span aria-hidden="true">{{ p.icon }}</span> <a href="{{ p.repo }}">{{ p.name }} ↗</a></h4>
+        <p>{{ p.text }}</p>
+        <ul class="tags">{% for t in p.stack %}<li>{{ t }}</li>{% endfor %}</ul>
+      </li>
+      {% endfor %}
+    </ul>
+
+    <h3 class="subhead">{{ ui.tech_stack }}</h3>
+    <dl class="stack-table">
+      {% for row in tech_stack %}
+      <div class="stack-row"><dt>{{ row.area }}</dt><dd>{{ row.items }}</dd></div>
+      {% endfor %}
+    </dl>
+  </div>
+</section>
+
+{# ------------------------------------------------------------ EDUCATION #}
+<section id="education" class="section" aria-labelledby="education-title">
+  <div class="container">
+    <p class="section-kicker">03 · {{ ui.nav_education }}</p>
+    <h2 id="education-title" class="section-title">{{ ui.education_title }}</h2>
+    <ol class="timeline">
+      {% for e in education %}
+      <li class="timeline-item">
+        <p class="period">{{ e.period }}</p>
+        <h3 class="timeline-title">{{ e.title }}</h3>
+        <p class="place">{{ e.place }}</p>
+        {% if e.stats %}
+        <ul class="stats stats-small">
+          {% for s in e.stats %}<li class="stat"><span class="stat-value">{{ s.value }}</span><span class="stat-label">{{ s.label }}</span></li>{% endfor %}
+        </ul>
+        {% endif %}
+        <ul class="bullets">{% for i in e.items %}<li>{{ i }}</li>{% endfor %}</ul>
+      </li>
+      {% endfor %}
+    </ol>
+
+    <h3 class="subhead">{{ ui.training }}</h3>
+    <ul class="grid grid-3">
+      {% for t in training %}
+      <li class="card">
+        <h4 class="card-title">{{ t.title }}</h4>
+        <p class="card-meta">{{ t.meta }}</p>
+        <p>{{ t.text }}</p>
+        {% if t.link %}<p><a href="{{ t.link }}">{{ t.link_label }} ↗</a></p>{% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+{# ------------------------------------------------------------ EXPERIENCE #}
+<section id="experience" class="section section-alt" aria-labelledby="experience-title">
+  <div class="container">
+    <p class="section-kicker">04 · {{ ui.nav_experience }}</p>
+    <h2 id="experience-title" class="section-title">{{ ui.experience_title }}</h2>
+    <p class="lead">{{ experience_intro }}</p>
+    <ol class="timeline">
+      {% for e in experience %}
+      <li class="timeline-item">
+        <p class="period">{{ e.period }}</p>
+        <h3 class="timeline-title">{{ e.title }}</h3>
+        <p class="place">{{ e.place }}</p>
+        {% if e.stats %}
+        <ul class="stats stats-small">
+          {% for s in e.stats %}<li class="stat"><span class="stat-value">{{ s.value }}</span><span class="stat-label">{{ s.label }}</span></li>{% endfor %}
+        </ul>
+        {% endif %}
+        <ul class="bullets">{% for i in e.items %}<li>{{ i }}</li>{% endfor %}</ul>
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+{# ------------------------------------------------------------ SKILLS #}
+<section id="skills" class="section" aria-labelledby="skills-title">
+  <div class="container">
+    <p class="section-kicker">05 · {{ ui.nav_skills }}</p>
+    <h2 id="skills-title" class="section-title">{{ ui.skills_title }}</h2>
+    <dl class="stack-table">
+      {% for s in skills %}
+      <div class="stack-row"><dt>{{ s.area }}</dt><dd>{{ s.text }}</dd></div>
+      {% endfor %}
+    </dl>
+    <div class="grid grid-2 skills-extra">
+      <div class="card">
+        <h3 class="card-title">{{ ui.languages }}</h3>
+        <dl class="lang-list">
+          {% for l in languages %}<div><dt>{{ l.name }}</dt><dd>{{ l.level }}</dd></div>{% endfor %}
+        </dl>
+      </div>
+      <div class="card">
+        <h3 class="card-title">{{ ui.competencies }}</h3>
+        <ul class="tags tags-lg">{% for c in competencies %}<li>{{ c }}</li>{% endfor %}</ul>
+        <p class="card-meta"><strong>{{ ui.interests }}:</strong> {{ interests }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ------------------------------------------------------------ CONTACT #}
+<section id="contact" class="section section-alt" aria-labelledby="contact-title">
+  <div class="container contact">
+    <p class="section-kicker">06 · {{ ui.nav_contact }}</p>
+    <h2 id="contact-title" class="section-title">{{ ui.contact_title }}</h2>
+    <p class="lead">{{ ui.contact_text }}</p>
+    <a class="btn btn-primary btn-lg" href="mailto:{{ profile.email }}">✉ {{ profile.email }}</a>
+    <ul class="contact-list">
+      <li><span aria-hidden="true">💻</span> <a href="{{ profile.github }}">{{ profile.github_label }}</a></li>
+      <li><span aria-hidden="true">🔗</span> <a href="{{ profile.linkedin }}">{{ profile.linkedin_label }}</a></li>
+      <li><span aria-hidden="true">📰</span> <a href="{{ profile.newsletter }}">{{ profile.newsletter_label }}</a></li>
+      <li><span aria-hidden="true">📍</span> {{ profile.location }}</li>
+    </ul>
+    <h3 class="subhead">{{ ui.documents }}</h3>
+    <ul class="doc-list">
+      {% for d in documents %}
+      <li><a class="btn btn-ghost" href="{% static d.file %}" download>{{ d.label }} ↓</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
 
 {% endblock %}
