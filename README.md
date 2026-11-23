@@ -36,6 +36,11 @@ main/
 
 ## Run locally
 
+On Windows, double-click **`run.bat`**: it creates the virtual environment if needed,
+installs Django and opens http://127.0.0.1:8000/ in the browser.
+
+Manually:
+
 ```bash
 python -m venv venv
 venv\Scripts\activate          # Windows  (source venv/bin/activate on Linux/macOS)
@@ -66,3 +71,9 @@ In the repository on GitHub: **Settings → Pages → Build and deployment → S
 ## Tech
 
 Python 3.12 · Django 5.2 · HTML · CSS (no framework) · vanilla JavaScript · GitHub Actions · GitHub Pages
+
+## Fonts
+
+Self-hosted in `main/static/fonts/` (latin subset, from Google Fonts), all under the
+SIL Open Font License 1.1: **Space Grotesk** (headings), **Inter** (body) and
+**JetBrains Mono** (code details).

@@ -1,0 +1,35 @@
+{% load static %}
+{% if p.visual == "image" and p.images %}
+<div class="visual visual-browser">
+  <div class="window-bar" aria-hidden="true"><span></span><span></span><span></span><em>{{ p.name|lower }}</em></div>
+  {% with img=p.images.0 %}
+  <img src="{% static img.src %}" width="{{ img.w }}" height="{{ img.h }}" alt="{{ img.caption }}" loading="lazy">
+  {% endwith %}
+</div>
+{% elif p.visual == "radar" %}
+<div class="visual visual-radar">
+  <div class="window-bar" aria-hidden="true"><span></span><span></span><span></span><em>LEMD · APP</em></div>
+  <div class="radar-wrap" aria-hidden="true">
+    <div class="radar">
+      <div class="radar-sweep"></div>
+      <span class="blip b1"><i>IBE3204 · 080</i></span>
+      <span class="blip b2"><i>RYR81K · 110</i></span>
+      <span class="blip b3"><i>VLG22B · 060</i></span>
+      <span class="blip b4"><i>AEA1047 · 140</i></span>
+      <span class="blip b5"><i>DLH8MT · 090</i></span>
+      <span class="runway"></span>
+    </div>
+  </div>
+  {% if p.metrics %}
+  <ul class="radar-metrics">
+    {% for m in p.metrics %}<li><strong>{{ m.value }}</strong><span>{{ m.label }}</span></li>{% endfor %}
+  </ul>
+  {% endif %}
+</div>
+{% elif p.visual == "terminal" %}
+<div class="visual visual-terminal">
+  <div class="window-bar" aria-hidden="true"><span></span><span></span><span></span><em>~/{{ p.name|lower }}</em></div>
+  <pre class="terminal"><code>{% for l in p.terminal %}<span class="t-{{ l.kind }}">{{ l.text }}</span>
+{% endfor %}<span class="t-cursor" aria-hidden="true">█</span></code></pre>
+</div>
+{% endif %}

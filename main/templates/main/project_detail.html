@@ -6,70 +6,78 @@
 {% block description %}{{ project.summary }}{% endblock %}
 
 {% block content %}
-<article class="section project-page">
+<article class="project-page">
+  <header class="project-hero">
+    <div class="hero-spot" aria-hidden="true"></div>
+    <div class="container">
+      <a class="link-back" href="{{ home_url }}#work" data-reveal><span aria-hidden="true">←</span> {{ ui.back }}</a>
+      <p class="section-kicker" data-reveal><span class="kicker-num">{{ project_index|stringformat:"02d" }}</span><span class="kicker-line" aria-hidden="true"></span>{{ ui.featured }}</p>
+      <h1 class="project-name" data-reveal>{{ project.name }}</h1>
+      <p class="project-subtitle" data-reveal>{{ project.subtitle }}</p>
+
+      <dl class="project-meta" data-reveal>
+        <div><dt>{{ ui.label_status }}</dt><dd><span class="pill-dot" aria-hidden="true"></span>{{ project.status }}</dd></div>
+        <div><dt>{{ ui.label_stack }}</dt><dd>{{ project.stack|join:" · " }}</dd></div>
+        <div><dt>{{ ui.label_links }}</dt><dd>
+          <a class="link" href="{{ project.repo }}">{{ ui.repo }} ↗</a>
+          {% if project.site %}<br><a class="link" href="{{ project.site }}">{{ ui.visit_site }} ↗</a>{% endif %}
+        </dd></div>
+      </dl>
+    </div>
+  </header>
+
   <div class="container">
-    <p><a class="back-link" href="{{ home_url }}#projects">← {{ ui.back }}</a></p>
-
-    <header class="project-header">
-      <p class="section-kicker"><span aria-hidden="true">{{ project.icon }}</span> {{ ui.featured }}</p>
-      <h1 class="section-title">{{ project.name }}</h1>
-      <p class="project-subtitle-lg">{{ project.subtitle }}</p>
-      <p><span class="badge">{{ project.status }}</span></p>
-      <ul class="tags">{% for t in project.stack %}<li>{{ t }}</li>{% endfor %}</ul>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="{{ project.repo }}">{{ ui.repo }} ↗</a>
-        {% if project.site %}<a class="btn btn-ghost" href="{{ project.site }}">{{ ui.visit_site }} ↗</a>{% endif %}
-      </div>
-    </header>
-
-    <div class="prose">
+    <div class="prose" data-reveal>
       {% for p in project.description %}<p>{{ p }}</p>{% endfor %}
     </div>
 
-    {% if project.metrics %}
-    <h2 class="subhead">{{ ui.results }}</h2>
-    <ul class="stats">
-      {% for m in project.metrics %}
-      <li class="stat"><span class="stat-value">{{ m.value }}</span><span class="stat-label">{{ m.label }}</span></li>
-      {% endfor %}
+    {% if project.visual == "radar" or project.visual == "terminal" %}
+    <div class="project-visual" data-reveal>{% include "main/_visual.html" with p=project %}</div>
+    {% if project.metrics_note %}<p class="note" data-reveal>{{ project.metrics_note }}</p>{% endif %}
+    {% elif project.metrics %}
+    <h2 class="subhead" data-reveal><span class="accent">//</span> {{ ui.results }}</h2>
+    <ul class="hero-stats project-stats" data-reveal>
+      {% for m in project.metrics %}<li><strong>{{ m.value }}</strong><span>{{ m.label }}</span></li>{% endfor %}
     </ul>
-    {% if project.metrics_note %}<p class="note">{{ project.metrics_note }}</p>{% endif %}
     {% endif %}
 
     {% if project.cards %}
-    <ul class="grid grid-3 project-cards">
+    <ul class="cols-3 project-cards">
       {% for c in project.cards %}
-      <li class="card"><h2 class="card-title">{{ c.title }}</h2><p>{{ c.text }}</p></li>
+      <li data-reveal><p class="col-meta">0{{ forloop.counter }}</p><h2>{{ c.title }}</h2><p>{{ c.text }}</p></li>
       {% endfor %}
     </ul>
     {% endif %}
 
     {% if project.images %}
-    <h2 class="subhead">{{ ui.screenshots }}</h2>
+    <h2 class="subhead" data-reveal><span class="accent">//</span> {{ ui.screenshots }}</h2>
     <div class="gallery">
       {% for img in project.images %}
-      <figure>
-        <a href="{% static img.src %}"><img src="{% static img.src %}" width="{{ img.w }}" height="{{ img.h }}" alt="{{ img.caption }}" loading="lazy"></a>
+      <figure data-reveal>
+        <div class="visual visual-browser">
+          <div class="window-bar" aria-hidden="true"><span></span><span></span><span></span><em>{{ project.name|lower }}</em></div>
+          <a href="{% static img.src %}"><img src="{% static img.src %}" width="{{ img.w }}" height="{{ img.h }}" alt="{{ img.caption }}" loading="lazy"></a>
+        </div>
         <figcaption>{{ img.caption }}</figcaption>
       </figure>
       {% endfor %}
     </div>
     {% endif %}
 
-    <div class="grid grid-2 project-sections">
+    <div class="project-sections">
       {% for s in project.sections %}
-      <section class="card">
-        <h2 class="card-title">{{ s.title }}</h2>
+      <section data-reveal>
+        <h2 class="subhead-sm"><span class="accent">//</span> {{ s.title }}</h2>
         <ul class="bullets">{% for i in s.items %}<li>{{ i }}</li>{% endfor %}</ul>
       </section>
       {% endfor %}
     </div>
 
-    <nav class="next-project" aria-label="{{ ui.nav_projects }}">
+    <nav class="next-project" aria-label="{{ ui.nav_work }}" data-reveal>
       <a href="{% if lang == 'es' %}{% url 'project_es' next_project.slug %}{% else %}{% url 'project_en' next_project.slug %}{% endif %}">
-        <span class="muted">{{ ui.nav_projects }} →</span>
-        <strong>{{ next_project.icon }} {{ next_project.name }}</strong>
-        <span class="muted">{{ next_project.subtitle }}</span>
+        <span class="next-label">{{ ui.nav_work }} <span aria-hidden="true">→</span></span>
+        <span class="next-name">{{ next_project.name }}</span>
+        <span class="next-sub">{{ next_project.subtitle }}</span>
       </a>
     </nav>
   </div>

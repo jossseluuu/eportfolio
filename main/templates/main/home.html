@@ -3,205 +3,237 @@
 
 {% block content %}
 
-{# ------------------------------------------------------------ HERO #}
-<section class="hero" aria-labelledby="hero-title">
-  <div class="container hero-grid">
-    <div class="hero-text">
-      <p class="eyebrow">{{ profile.role }} · {{ profile.location }}</p>
-      <h1 id="hero-title">{{ profile.name }}</h1>
-      <p class="hero-tagline">{{ profile.tagline }}</p>
-      <p class="hero-intro">{{ profile.intro }}</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="#projects">{{ ui.cta_projects }}</a>
-        <a class="btn btn-ghost" href="{% if lang == 'es' %}{% static 'docs/JoseLuisLopez_CV_ES.pdf' %}{% else %}{% static 'docs/JoseLuisLopez_CV_EN.pdf' %}{% endif %}" download>{{ ui.cta_cv }} ↓</a>
-      </div>
-      <ul class="hero-links" aria-label="{{ ui.nav_contact }}">
-        <li><a href="{{ profile.github }}">GitHub</a></li>
-        <li><a href="{{ profile.linkedin }}">LinkedIn</a></li>
-        <li><a href="mailto:{{ profile.email }}">{{ profile.email }}</a></li>
+{# ================================================================ HERO #}
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="hero-spot" aria-hidden="true"></div>
+  <div class="container hero-inner">
+    <p class="pill" data-reveal><span class="pill-dot" aria-hidden="true"></span>{{ profile.availability }}</p>
+
+    <h1 class="hero-name" id="hero-title" data-reveal>
+      <span class="hero-line">{{ profile.name_lines.0 }}</span>
+      <span class="hero-line hero-line-outline">{{ profile.name_lines.1 }}</span>
+    </h1>
+
+    <div class="hero-meta" data-reveal>
+      <p class="hero-role"><span class="accent">//</span> {{ ui.role_line }}</p>
+      <p class="hero-focus">{{ ui.focus_line }}</p>
+    </div>
+
+    <p class="hero-intro" data-reveal>{{ profile.intro }}</p>
+
+    <div class="hero-actions" data-reveal>
+      <a class="btn btn-primary" href="#work">{{ ui.cta_projects }} <span aria-hidden="true">→</span></a>
+      <a class="btn btn-ghost" href="{% if lang == 'es' %}{% static 'docs/JoseLuisLopez_CV_ES.pdf' %}{% else %}{% static 'docs/JoseLuisLopez_CV_EN.pdf' %}{% endif %}" download>{{ ui.cta_cv }} <span aria-hidden="true">↓</span></a>
+      <ul class="socials">
+        <li><a href="{{ profile.github }}" aria-label="GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.11 3.04.74.81 1.19 1.83 1.19 3.09 0 4.41-2.7 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg></a></li>
+        <li><a href="{{ profile.linkedin }}" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a></li>
+        <li><a href="mailto:{{ profile.email }}" aria-label="Email"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h17A1.5 1.5 0 0 1 22 5.5v13a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 18.5v-13zm2 .9v.3l8 5.3 8-5.3v-.3H4zm16 2.7-7.45 4.94a1 1 0 0 1-1.1 0L4 9.1V18h16V9.1z"/></svg></a></li>
       </ul>
     </div>
-    <div class="hero-photo">
-      <img src="{% static 'img/profile.webp' %}" width="480" height="480" alt="{{ profile.name }}" fetchpriority="high">
-    </div>
-  </div>
-  <div class="container">
-    <ul class="stats stats-hero">
+
+    <ul class="hero-stats" data-reveal>
       {% for h in highlights %}
-      <li class="stat"><span class="stat-value">{{ h.value }}</span><span class="stat-label">{{ h.label }}</span></li>
+      <li><strong>{{ h.value }}</strong><span>{{ h.label }}</span></li>
       {% endfor %}
     </ul>
   </div>
+  <a class="scroll-cue" href="#about"><span class="scroll-mouse" aria-hidden="true"></span>{{ ui.scroll }}</a>
 </section>
 
-{# ------------------------------------------------------------ ABOUT #}
+{# ================================================================ ABOUT #}
 <section id="about" class="section" aria-labelledby="about-title">
   <div class="container">
-    <p class="section-kicker">01 · {{ ui.nav_about }}</p>
-    <h2 id="about-title" class="section-title">{{ about.title }}</h2>
-    <div class="about-text">
-      {% for p in about.paragraphs %}<p>{{ p }}</p>{% endfor %}
+    {% include "main/_section_head.html" with num="01" label=ui.nav_about title=about.title id="about" %}
+    <div class="about-grid">
+      <figure class="portrait" data-reveal>
+        <img src="{% static 'img/profile.webp' %}" width="480" height="480" alt="{{ profile.name }}" loading="lazy">
+        <figcaption><span class="pill-dot" aria-hidden="true"></span>{{ profile.location }}</figcaption>
+      </figure>
+      <div class="about-text" data-reveal>
+        {% for p in about.paragraphs %}<p>{{ p }}</p>{% endfor %}
+      </div>
     </div>
-    <h3 class="subhead">{{ ui.how_i_work }}</h3>
-    <ul class="grid grid-4">
+
+    <h3 class="subhead" data-reveal><span class="accent">//</span> {{ ui.how_i_work }}</h3>
+    <ol class="principles">
       {% for item in about.principles %}
-      <li class="card">
-        <span class="card-icon" aria-hidden="true">{{ item.icon }}</span>
-        <h4 class="card-title">{{ item.title }}</h4>
+      <li data-reveal>
+        <span class="principle-num">0{{ forloop.counter }}</span>
+        <h4>{{ item.title }}</h4>
         <p>{{ item.text }}</p>
       </li>
       {% endfor %}
-    </ul>
+    </ol>
   </div>
 </section>
 
-{# ------------------------------------------------------------ PROJECTS #}
-<section id="projects" class="section section-alt" aria-labelledby="projects-title">
+{# ================================================================ WORK #}
+<section id="work" class="section" aria-labelledby="work-title">
   <div class="container">
-    <p class="section-kicker">02 · {{ ui.featured }}</p>
-    <h2 id="projects-title" class="section-title">{{ ui.featured_title }}</h2>
-    <ul class="project-list">
+    {% include "main/_section_head.html" with num="02" label=ui.featured title=ui.featured_title id="work" %}
+
+    <ol class="work-list">
       {% for p in featured_projects %}
-      <li class="project-card">
-        <a class="project-card-link" href="{% if lang == 'es' %}{% url 'project_es' p.slug %}{% else %}{% url 'project_en' p.slug %}{% endif %}">
-          <div class="project-card-head">
-            <span class="project-icon" aria-hidden="true">{{ p.icon }}</span>
-            <span class="badge">{{ p.status }}</span>
+      {% if lang == 'es' %}{% url 'project_es' p.slug as purl %}{% else %}{% url 'project_en' p.slug as purl %}{% endif %}
+      <li class="work-item" data-reveal>
+        <div class="work-text">
+          <p class="work-index">{{ forloop.counter|stringformat:"02d" }} <span>/ 0{{ featured_projects|length }}</span></p>
+          <h3 class="work-name"><a href="{{ purl }}">{{ p.name }}</a></h3>
+          <p class="work-subtitle">{{ p.subtitle }}</p>
+          <p class="work-summary">{{ p.summary }}</p>
+          <ul class="tags">{% for t in p.stack|slice:":6" %}<li>{{ t }}</li>{% endfor %}</ul>
+          <p class="work-status"><span class="pill-dot" aria-hidden="true"></span>{{ p.status }}</p>
+          <div class="work-links">
+            <a class="link-arrow" href="{{ purl }}">{{ ui.case_study }} <span aria-hidden="true">→</span></a>
+            <a class="link" href="{{ p.repo }}">GitHub ↗</a>
           </div>
-          <h3 class="project-name">{{ p.name }}</h3>
-          <p class="project-subtitle">{{ p.subtitle }}</p>
-          <p class="project-summary">{{ p.summary }}</p>
-          <ul class="tags">{% for t in p.stack|slice:":5" %}<li>{{ t }}</li>{% endfor %}</ul>
-          <span class="more">{{ ui.details }} →</span>
+        </div>
+        <a class="work-visual" href="{{ purl }}" tabindex="-1" aria-hidden="true">
+          {% include "main/_visual.html" with p=p %}
+        </a>
+      </li>
+      {% endfor %}
+    </ol>
+
+    <h3 class="subhead" data-reveal><span class="accent">//</span> {{ ui.other_projects }}</h3>
+    <ul class="rows">
+      {% for p in other_projects %}
+      <li data-reveal>
+        <a class="row" href="{{ p.repo }}">
+          <span class="row-title"><span aria-hidden="true">{{ p.icon }}</span> {{ p.name }}</span>
+          <span class="row-text">{{ p.text }}</span>
+          <span class="row-meta">{{ p.stack|join:" · " }}</span>
+          <span class="row-arrow" aria-hidden="true">↗</span>
         </a>
       </li>
       {% endfor %}
     </ul>
 
-    <h3 class="subhead">{{ ui.other_projects }}</h3>
-    <ul class="grid grid-2">
-      {% for p in other_projects %}
-      <li class="card">
-        <h4 class="card-title"><span aria-hidden="true">{{ p.icon }}</span> <a href="{{ p.repo }}">{{ p.name }} ↗</a></h4>
-        <p>{{ p.text }}</p>
-        <ul class="tags">{% for t in p.stack %}<li>{{ t }}</li>{% endfor %}</ul>
-      </li>
+    <h3 class="subhead" data-reveal><span class="accent">//</span> {{ ui.tech_stack }}</h3>
+  </div>
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      {% for i in "12" %}
+      <ul>
+        <li>Python</li><li>C++20</li><li>TypeScript</li><li>Django</li><li>FastAPI</li><li>React</li><li>PyTorch</li><li>ONNX</li><li>PostgreSQL</li><li>pgvector</li><li>Redis</li><li>Docker</li><li>GitHub Actions</li><li>Three.js</li><li>Argon2id</li><li>XChaCha20-Poly1305</li><li>libFuzzer</li><li>Claude API</li><li>Ollama</li><li>scikit-learn</li><li>Linux</li>
+      </ul>
       {% endfor %}
-    </ul>
-
-    <h3 class="subhead">{{ ui.tech_stack }}</h3>
-    <dl class="stack-table">
+    </div>
+  </div>
+  <div class="container">
+    <dl class="spec-list">
       {% for row in tech_stack %}
-      <div class="stack-row"><dt>{{ row.area }}</dt><dd>{{ row.items }}</dd></div>
+      <div data-reveal><dt>{{ row.area }}</dt><dd>{{ row.items }}</dd></div>
       {% endfor %}
     </dl>
   </div>
 </section>
 
-{# ------------------------------------------------------------ EDUCATION #}
+{# ================================================================ EDUCATION #}
 <section id="education" class="section" aria-labelledby="education-title">
   <div class="container">
-    <p class="section-kicker">03 · {{ ui.nav_education }}</p>
-    <h2 id="education-title" class="section-title">{{ ui.education_title }}</h2>
+    {% include "main/_section_head.html" with num="03" label=ui.nav_education title=ui.education_title id="education" %}
     <ol class="timeline">
       {% for e in education %}
-      <li class="timeline-item">
-        <p class="period">{{ e.period }}</p>
-        <h3 class="timeline-title">{{ e.title }}</h3>
-        <p class="place">{{ e.place }}</p>
-        {% if e.stats %}
-        <ul class="stats stats-small">
-          {% for s in e.stats %}<li class="stat"><span class="stat-value">{{ s.value }}</span><span class="stat-label">{{ s.label }}</span></li>{% endfor %}
-        </ul>
-        {% endif %}
-        <ul class="bullets">{% for i in e.items %}<li>{{ i }}</li>{% endfor %}</ul>
+      <li class="tl-item" data-reveal>
+        <p class="tl-period">{{ e.period }}</p>
+        <div class="tl-body">
+          <h3>{{ e.title }}</h3>
+          <p class="tl-place">{{ e.place }}</p>
+          {% if e.stats %}<ul class="mini-stats">{% for s in e.stats %}<li><strong>{{ s.value }}</strong><span>{{ s.label }}</span></li>{% endfor %}</ul>{% endif %}
+          <ul class="bullets">{% for i in e.items %}<li>{{ i }}</li>{% endfor %}</ul>
+        </div>
       </li>
       {% endfor %}
     </ol>
 
-    <h3 class="subhead">{{ ui.training }}</h3>
-    <ul class="grid grid-3">
+    <h3 class="subhead" data-reveal><span class="accent">//</span> {{ ui.training }}</h3>
+    <ul class="cols-3">
       {% for t in training %}
-      <li class="card">
-        <h4 class="card-title">{{ t.title }}</h4>
-        <p class="card-meta">{{ t.meta }}</p>
+      <li data-reveal>
+        <p class="col-meta">{{ t.meta }}</p>
+        <h4>{{ t.title }}</h4>
         <p>{{ t.text }}</p>
-        {% if t.link %}<p><a href="{{ t.link }}">{{ t.link_label }} ↗</a></p>{% endif %}
+        {% if t.link %}<a class="link" href="{{ t.link }}">{{ t.link_label }} ↗</a>{% endif %}
       </li>
       {% endfor %}
     </ul>
   </div>
 </section>
 
-{# ------------------------------------------------------------ EXPERIENCE #}
-<section id="experience" class="section section-alt" aria-labelledby="experience-title">
+{# ================================================================ EXPERIENCE #}
+<section id="experience" class="section" aria-labelledby="experience-title">
   <div class="container">
-    <p class="section-kicker">04 · {{ ui.nav_experience }}</p>
-    <h2 id="experience-title" class="section-title">{{ ui.experience_title }}</h2>
-    <p class="lead">{{ experience_intro }}</p>
+    {% include "main/_section_head.html" with num="04" label=ui.nav_experience title=ui.experience_title id="experience" %}
+    <p class="lead" data-reveal>{{ experience_intro }}</p>
     <ol class="timeline">
       {% for e in experience %}
-      <li class="timeline-item">
-        <p class="period">{{ e.period }}</p>
-        <h3 class="timeline-title">{{ e.title }}</h3>
-        <p class="place">{{ e.place }}</p>
-        {% if e.stats %}
-        <ul class="stats stats-small">
-          {% for s in e.stats %}<li class="stat"><span class="stat-value">{{ s.value }}</span><span class="stat-label">{{ s.label }}</span></li>{% endfor %}
-        </ul>
-        {% endif %}
-        <ul class="bullets">{% for i in e.items %}<li>{{ i }}</li>{% endfor %}</ul>
+      <li class="tl-item" data-reveal>
+        <p class="tl-period">{{ e.period }}</p>
+        <div class="tl-body">
+          <h3>{{ e.title }}</h3>
+          <p class="tl-place">{{ e.place }}</p>
+          {% if e.stats %}<ul class="mini-stats">{% for s in e.stats %}<li><strong>{{ s.value }}</strong><span>{{ s.label }}</span></li>{% endfor %}</ul>{% endif %}
+          <ul class="bullets">{% for i in e.items %}<li>{{ i }}</li>{% endfor %}</ul>
+        </div>
       </li>
       {% endfor %}
     </ol>
   </div>
 </section>
 
-{# ------------------------------------------------------------ SKILLS #}
+{# ================================================================ SKILLS #}
 <section id="skills" class="section" aria-labelledby="skills-title">
   <div class="container">
-    <p class="section-kicker">05 · {{ ui.nav_skills }}</p>
-    <h2 id="skills-title" class="section-title">{{ ui.skills_title }}</h2>
-    <dl class="stack-table">
+    {% include "main/_section_head.html" with num="05" label=ui.nav_skills title=ui.skills_title id="skills" %}
+    <dl class="spec-list">
       {% for s in skills %}
-      <div class="stack-row"><dt>{{ s.area }}</dt><dd>{{ s.text }}</dd></div>
+      <div data-reveal><dt>{{ s.area }}</dt><dd>{{ s.text }}</dd></div>
       {% endfor %}
     </dl>
-    <div class="grid grid-2 skills-extra">
-      <div class="card">
-        <h3 class="card-title">{{ ui.languages }}</h3>
-        <dl class="lang-list">
+    <div class="skills-extra">
+      <div data-reveal>
+        <h3 class="subhead-sm"><span class="accent">//</span> {{ ui.languages }}</h3>
+        <dl class="langs">
           {% for l in languages %}<div><dt>{{ l.name }}</dt><dd>{{ l.level }}</dd></div>{% endfor %}
         </dl>
       </div>
-      <div class="card">
-        <h3 class="card-title">{{ ui.competencies }}</h3>
-        <ul class="tags tags-lg">{% for c in competencies %}<li>{{ c }}</li>{% endfor %}</ul>
-        <p class="card-meta"><strong>{{ ui.interests }}:</strong> {{ interests }}</p>
+      <div data-reveal>
+        <h3 class="subhead-sm"><span class="accent">//</span> {{ ui.competencies }}</h3>
+        <ul class="chips">{% for c in competencies %}<li>{{ c }}</li>{% endfor %}</ul>
+        <p class="muted small"><strong>{{ ui.interests }}:</strong> {{ interests }}</p>
       </div>
     </div>
   </div>
 </section>
 
-{# ------------------------------------------------------------ CONTACT #}
-<section id="contact" class="section section-alt" aria-labelledby="contact-title">
-  <div class="container contact">
-    <p class="section-kicker">06 · {{ ui.nav_contact }}</p>
-    <h2 id="contact-title" class="section-title">{{ ui.contact_title }}</h2>
-    <p class="lead">{{ ui.contact_text }}</p>
-    <a class="btn btn-primary btn-lg" href="mailto:{{ profile.email }}">✉ {{ profile.email }}</a>
-    <ul class="contact-list">
-      <li><span aria-hidden="true">💻</span> <a href="{{ profile.github }}">{{ profile.github_label }}</a></li>
-      <li><span aria-hidden="true">🔗</span> <a href="{{ profile.linkedin }}">{{ profile.linkedin_label }}</a></li>
-      <li><span aria-hidden="true">📰</span> <a href="{{ profile.newsletter }}">{{ profile.newsletter_label }}</a></li>
-      <li><span aria-hidden="true">📍</span> {{ profile.location }}</li>
-    </ul>
-    <h3 class="subhead">{{ ui.documents }}</h3>
-    <ul class="doc-list">
-      {% for d in documents %}
-      <li><a class="btn btn-ghost" href="{% static d.file %}" download>{{ d.label }} ↓</a></li>
-      {% endfor %}
-    </ul>
+{# ================================================================ CONTACT #}
+<section id="contact" class="section contact" aria-labelledby="contact-title">
+  <div class="container">
+    <header class="section-head" data-reveal>
+      <p class="section-kicker"><span class="kicker-num">06</span><span class="kicker-line" aria-hidden="true"></span>{{ ui.nav_contact }}</p>
+      <h2 class="contact-title" id="contact-title">{{ ui.contact_title }}<span class="accent">.</span></h2>
+    </header>
+    <p class="lead" data-reveal>{{ ui.contact_text }}</p>
+    <a class="contact-email" href="mailto:{{ profile.email }}" data-reveal><span class="sr-only">{{ ui.email_me }}: </span>{{ profile.email }} <span aria-hidden="true">↗</span></a>
+
+    <div class="contact-grid">
+      <div data-reveal>
+        <h3 class="subhead-sm"><span class="accent">//</span> {{ ui.elsewhere }}</h3>
+        <ul class="contact-links">
+          <li><a class="link" href="{{ profile.github }}">{{ profile.github_label }}</a></li>
+          <li><a class="link" href="{{ profile.linkedin }}">{{ profile.linkedin_label }}</a></li>
+          <li><a class="link" href="{{ profile.newsletter }}">{{ profile.newsletter_label }}</a></li>
+          <li class="muted">{{ profile.location }}</li>
+        </ul>
+      </div>
+      <div data-reveal>
+        <h3 class="subhead-sm"><span class="accent">//</span> {{ ui.documents }}</h3>
+        <ul class="contact-links">
+          {% for d in documents %}<li><a class="link" href="{% static d.file %}" download>{{ d.label }} ↓</a></li>{% endfor %}
+        </ul>
+      </div>
+    </div>
   </div>
 </section>
 

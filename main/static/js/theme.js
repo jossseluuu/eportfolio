@@ -1,11 +1,11 @@
-// Runs in <head> before first paint so the page never flashes the wrong theme.
-// The choice is kept in localStorage only (no cookies).
+// Runs in <head> before first paint: picks the theme (dark by default) and
+// flags that JS is available so reveal animations can hide content safely.
+// The choice is stored in localStorage only (no cookies).
 (function () {
+  var root = document.documentElement;
+  root.classList.add("js");
   try {
     var saved = localStorage.getItem("theme");
-    var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
-    document.documentElement.setAttribute("data-theme", theme);
-  } catch (e) {
-    document.documentElement.setAttribute("data-theme", "dark");
-  }
+    if (saved === "light" || saved === "dark") root.setAttribute("data-theme", saved);
+  } catch (e) {}
 })();

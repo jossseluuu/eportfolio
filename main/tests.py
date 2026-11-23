@@ -9,7 +9,7 @@ class PagesTest(SimpleTestCase):
         for lang in LANGS:
             response = self.client.get(reverse(f"home_{lang}"))
             self.assertEqual(response.status_code, 200)
-            self.assertContains(response, f'<html lang="{lang}">')
+            self.assertContains(response, f'<html lang="{lang}"')
 
     def test_project_pages(self):
         for lang in LANGS:

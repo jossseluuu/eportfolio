@@ -35,6 +35,8 @@ def localize(data, lang):
 PROFILE = {
     "name": "José Luis López López",
     "short_name": "José Luis",
+    "name_lines": ["José Luis", "López López"],
+    "availability": T("Open to internships & junior roles", "Abierto a prácticas y puestos junior"),
     "role": T("Computer Engineering student", "Estudiante de Ingeniería Informática"),
     "tagline": T(
         "Applied AI, cybersecurity and backend systems",
@@ -60,14 +62,10 @@ PROFILE = {
 }
 
 HIGHLIGHTS = [
-    {"value": "7", "label": T("Honours with Distinction at the University of Granada",
-                              "Matrículas de Honor en la Universidad de Granada")},
-    {"value": T("3.68", "3,68"), "label": T("GPA at the University of Montana · Dean's List ×2",
-                                 "GPA en la University of Montana · Dean's List ×2")},
-    {"value": "900+", "label": T("students represented as Faculty Student Delegate",
-                                 "estudiantes representados como Delegado de Facultad")},
-    {"value": "5", "label": T("featured projects published on GitHub",
-                              "proyectos destacados publicados en GitHub")},
+    {"value": "7", "label": T("Honours with Distinction · UGR", "Matrículas de Honor · UGR")},
+    {"value": T("3.68", "3,68"), "label": T("GPA · Univ. of Montana", "GPA · Univ. of Montana")},
+    {"value": "900+", "label": T("students represented", "estudiantes representados")},
+    {"value": "5", "label": T("featured projects", "proyectos destacados")},
 ]
 
 # --------------------------------------------------------------------------
@@ -150,6 +148,8 @@ ABOUT = {
 FEATURED_PROJECTS = [
     {
         "slug": "openscope",
+        "visual": "radar",
+        "terminal": [],
         "icon": "🛫",
         "name": "openScope",
         "subtitle": T("AI air traffic controllers", "Controladores aéreos con IA"),
@@ -273,6 +273,8 @@ FEATURED_PROJECTS = [
     },
     {
         "slug": "icpu",
+        "visual": "image",
+        "terminal": [],
         "icon": "🔐",
         "name": "I-CPU",
         "subtitle": T("Hide data in images, then try to find it",
@@ -357,6 +359,8 @@ FEATURED_PROJECTS = [
     },
     {
         "slug": "companyagentshq",
+        "visual": "image",
+        "terminal": [],
         "icon": "🏢",
         "name": "CompanyAgentsHQ",
         "subtitle": T("A company of AI agents you can actually manage",
@@ -469,6 +473,18 @@ FEATURED_PROJECTS = [
     },
     {
         "slug": "howthingstalk",
+        "visual": "terminal",
+        "terminal": [
+            {"kind": "cmd", "text": "howthingstalk ask \"how does GPS compute your position?\""},
+            {"kind": "out", "text": T("1 · question & prerequisites", "1 · pregunta y requisitos previos")},
+            {"kind": "out", "text": T("2 · one-sentence answer", "2 · respuesta en una frase")},
+            {"kind": "out", "text": T("3 · everyday mental model (and where it breaks)",
+                                     "3 · modelo mental cotidiano (y dónde falla)")},
+            {"kind": "out", "text": T("4 · mechanism: protocols & real numbers",
+                                     "4 · mecanismo: protocolos y números reales")},
+            {"kind": "ok", "text": T("EN · ES — written twice, not translated once",
+                                    "EN · ES — escrito dos veces, no traducido una")},
+        ],
         "icon": "📡",
         "name": "HowThingsTalk",
         "subtitle": T("Explaining the technology we use without thinking",
@@ -521,6 +537,15 @@ FEATURED_PROJECTS = [
     },
     {
         "slug": "zerotrace",
+        "visual": "terminal",
+        "terminal": [
+            {"kind": "cmd", "text": "python build.py --lang en,es"},
+            {"kind": "ok", "text": T("edition generated · markdown + html", "edición generada · markdown + html")},
+            {"kind": "ok", "text": T("rss feeds updated (en, es)", "feeds rss actualizados (en, es)")},
+            {"kind": "ok", "text": T("0 duplicated alerts or CVEs", "0 alertas o CVE duplicados")},
+            {"kind": "ok", "text": T("no cookies · no analytics · strict CSP",
+                                    "sin cookies · sin analítica · CSP estricta")},
+        ],
         "icon": "🚦",
         "name": "ZeroTrace",
         "subtitle": T("A daily cybersecurity newsletter for everyone",
@@ -902,6 +927,17 @@ DOCUMENTS = [
 
 UI = {
     "nav_about": T("About", "Sobre mí"),
+    "nav_work": T("Work", "Proyectos"),
+    "label_status": T("Status", "Estado"),
+    "label_stack": "Stack",
+    "label_links": T("Links", "Enlaces"),
+    "scroll": T("Scroll", "Desliza"),
+    "case_study": T("View project", "Ver proyecto"),
+    "role_line": T("Computer Engineering · University of Granada",
+                   "Ingeniería Informática · Universidad de Granada"),
+    "focus_line": T("applied AI · cybersecurity · backend", "IA aplicada · ciberseguridad · backend"),
+    "email_me": T("Write me an email", "Escríbeme un email"),
+    "elsewhere": T("Elsewhere", "En otros sitios"),
     "nav_projects": T("Projects", "Proyectos"),
     "nav_education": T("Education", "Formación"),
     "nav_experience": T("Experience", "Experiencia"),

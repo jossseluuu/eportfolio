@@ -41,6 +41,7 @@ def project(request, slug, lang):
     if index is None:
         raise Http404("Unknown project")
     ctx["project"] = projects[index]
+    ctx["project_index"] = index + 1
     ctx["next_project"] = projects[(index + 1) % len(projects)]
     return render(request, "main/project_detail.html", ctx)
 
